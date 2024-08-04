@@ -10,6 +10,7 @@ import { SalesmenModule } from './salesmen/salesmen.module';
 import { OrdersModule } from './orders/orders.module';
 import { AreasModule } from './areas/areas.module';
 import { ShopsModule } from './shops/shops.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ShopsModule } from './shops/shops.module';
     OrdersModule,
     AreasModule,
     ShopsModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

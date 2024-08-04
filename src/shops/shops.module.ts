@@ -18,5 +18,7 @@ import { SalesmenModule } from 'src/salesmen/salesmen.module';
   ],
   controllers: [ShopsController],
   providers: [ShopsService, ShopsRepository],
+  exports: [ShopsService, ShopsRepository],
+
 })
 export class ShopsModule {}

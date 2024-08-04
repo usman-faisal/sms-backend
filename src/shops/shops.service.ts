@@ -5,6 +5,7 @@ import { CreateShopDto } from './dto/create-shop.request.dto';
 import { AreasRepository } from 'src/areas/repositories/areas.repository';
 import { UsersRepository } from 'src/users/users.repository';
 import { SalesmenRepository } from 'src/salesmen/repositories/salesmen.repository';
+import { SalesmenService } from 'src/salesmen/salesmen.service';
 
 @Injectable()
 export class ShopsService {
@@ -12,19 +13,16 @@ export class ShopsService {
     private readonly shopsRepository: ShopsRepository,
     private readonly areasRepository: AreasRepository,
     private readonly salesmenRepository: SalesmenRepository,
-  ) {}
+    private readonly salesmenService: SalesmenService
+  ) {
 
-  async doesAreaBelongsToSalesman(userId: Types.ObjectId, areaId: string) {
-    const salesman = await this.salesmenRepository.findOne({ user: userId });
-    if (!salesman.areas.includes(areaId as unknown as Types.ObjectId)) {
-      return false;
-    }
-    return true;
   }
+
+
 
   async deleteShop(userId: Types.ObjectId, areaId: string, shopId: string) {
     try {
-      await this.doesAreaBelongsToSalesman(userId, areaId);
+      await this.salesmenService.doesAreaBelongToSalesman(userId, areaId);
       const area = await this.areasRepository.findOne({ _id: areaId });
       if (!area) {
         throw new NotFoundException();
@@ -47,7 +45,7 @@ export class ShopsService {
     updateShopDto: CreateShopDto,
   ) {
     try {
-      await this.doesAreaBelongsToSalesman(userId, areaId);
+      await this.salesmenService.doesAreaBelongToSalesman(userId, areaId);
       const area = await this.areasRepository.findOne({ _id: areaId });
       if (!area) {
         throw new NotFoundException();
@@ -67,7 +65,7 @@ export class ShopsService {
 
   async getShopsByArea(userId: Types.ObjectId, areaId: string) {
     try {
-      await this.doesAreaBelongsToSalesman(userId, areaId);
+      await this.salesmenService.doesAreaBelongToSalesman(userId, areaId);
       const area = await this.areasRepository.findOne({ _id: areaId });
       if (!area) {
         throw new NotFoundException();
@@ -83,7 +81,7 @@ export class ShopsService {
     areaId: string,
   ) {
     try {
-      await this.doesAreaBelongsToSalesman(userId, areaId);
+      await this.salesmenService.doesAreaBelongToSalesman(userId, areaId);
       const area = await this.areasRepository.findOne({ _id: areaId });
       if (!area) {
         throw new NotFoundException();

@@ -13,6 +13,6 @@ import { Salesman, SalesmanSchema } from './schemas/salesman.schema';
   ],
   controllers: [SalesmenController],
   providers: [SalesmenService, SalesmenRepository],
-  exports: [SalesmenRepository],
+  exports: [SalesmenRepository, SalesmenService],
 })
 export class SalesmenModule {}
